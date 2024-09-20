@@ -1,0 +1,23 @@
+{
+  "name": "student-marketplace",
+  "version": "1.0.0",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tbruhnuncc/Student-Marketplace.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/tbruhnuncc/Student-Marketplace/issues"
+  },
+  "homepage": "https://github.com/tbruhnuncc/Student-Marketplace#readme",
+  "description": "",
+  "dependencies": {
+    "express": "^4.21.0",
+    "mongoose": "^8.6.2"
+  }
+}
