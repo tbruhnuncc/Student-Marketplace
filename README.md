@@ -36,8 +36,8 @@ Welcome to the UNCC Student Marketplace, an exclusive online marketplace designe
    npm install
    ```
 4. Setup environmental variable:
-  -Create a .env file in the root directory.
-  -Add your MongoDB URI and email service credentials.
+  - **Create a .env file in the root directory.
+  - **Add your MongoDB URI and email service credentials.
 5. Run the development server:
   ```bash
    npm run dev
