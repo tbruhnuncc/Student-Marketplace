@@ -44,3 +44,7 @@ Welcome to the UNCC Student Marketplace, an exclusive online marketplace designe
    ```
 6. View development server:
   - Navigate to http://localhost:3000/
+
+## Progress
+We are currently in the planning phase of Sprint 1
+
