@@ -42,3 +42,5 @@ Welcome to the UNCC Student Marketplace, an exclusive online marketplace designe
   ```bash
    npm run dev
    ```
+6. View development server:
+  - Navigate to http://localhost:3000/
