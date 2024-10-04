@@ -6,8 +6,7 @@ const productSchema = new mongoose.Schema({
     required: [true, "Product title is required"],
   },
   seller: {
-    type: mongoose.Schema.Types.ObjectId,
-    ref: "User",
+    type: String,
     required: [true, "Product seller is required"],
   },
   condition: {

@@ -55,3 +55,33 @@ exports.delete = (req, res, next) => {
     })
     .catch(err=>next(err));
 }
+
+exports.index = (req, res, next) => {
+    // let product = new model({
+    //     title: "Product",
+    //     description: "This is a product",
+    //     image: "image.png",
+    //     price: 10,
+    //     condition: "Used",
+    //     tags: ["tag1", "tag2"],
+    //     seller: "Seller",
+    //     active: true
+    // });
+    // product.save();
+    // if (product) {
+    //     res.send(product);
+    // }    
+    // else {
+    //     next(err);
+    // }
+    model.find()
+    .then(parts=>{
+        if (parts) {
+            res.render("./product/index", {parts});
+        }
+        else {
+            next(err);
+        }
+    })
+    .catch(err=>next(err));
+}
