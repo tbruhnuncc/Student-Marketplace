@@ -3,7 +3,6 @@ const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const userController = require("./controllers/userController");
 
-
 // dot env config
 dotenv.config();
 const app = express();
@@ -21,13 +20,14 @@ mongoose
   })
   .catch((err) => console.log(err.message));
 
-
 app.use(express.urlencoded({extended: true}));
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
   res.render("index");
 });
+
+app.get("/:id", userController.profile);
 
 app.get("/test/:id", (req, res, next) => {
   userController.read(req, res, next);
