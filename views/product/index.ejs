@@ -1,0 +1,26 @@
+<%- include('../partials/header.ejs')%>
+<main>
+    <div>
+        <h1 class="items-header">Available Listings</h1>
+        <div class="listings-wrapper">
+            <% if (parts.length) { %>
+                <% parts.forEach(part=>{ %>
+                    <% if (part.active) { %>
+                        <a href="/parts/<%= part.id %>"><section class="listing">
+                            <img src="<%= part.image %>" class="listing-img" alt="An image of a <%= part.title %>">
+                            <h3 class="listing-header"><%= part.title %></h3>
+                            <p>
+                                Condition: <%= part.condition %><br>
+                                Price: <%= part.price %><br>
+                                Offers Made: <%= part.totalOffers %><br>
+                            </p>
+                        </section></a>
+                    <% } %>
+                <%});
+            } else { %>
+                <p>There are no parts to display.</p>
+            <% } %>
+        </div>
+    </div>
+</main>
+<%- include('../partials/footer.ejs')%>

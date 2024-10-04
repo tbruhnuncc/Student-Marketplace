@@ -1,7 +1,9 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
-const userController = require("./controllers/userController");
+const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes')
+
 
 // dot env config
 dotenv.config();
@@ -27,8 +29,5 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
-app.get("/:id", userController.profile);
-
-app.get("/test/:id", (req, res, next) => {
-  userController.read(req, res, next);
-});
+app.use('/products', productRoutes);
+app.use('/users', userRoutes);
