@@ -83,3 +83,7 @@ exports.show = (req, res, next) => {
     })
     .catch(err=>next(err));
 }
+
+exports.new = (req, res, next) => {
+    res.render("./product/new");
+}

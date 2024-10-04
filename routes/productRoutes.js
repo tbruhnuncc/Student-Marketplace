@@ -6,8 +6,8 @@ const router = express.Router();
 //GET /products: send all products
 router.get('/', controller.index)
 
-// //GET /products/new: send html form for creating a new product
-// router.get('/new', controller.new)
+//GET /products/new: send html form for creating a new product
+router.get('/new', controller.new)
 
 // //POST /products: create a new product
 // router.post('/', controller.create)
