@@ -1,37 +1,41 @@
-const model = require("../models/product");
+const model = require("../models/user");
 
 exports.create = (req, res, next) => {
-    let product = new model(req.body);
-    product.save()
+    console.log(req.body);
+    let user = new model(req.body);
+    user.save()
     .then(result => {
         res.send(result);
     })
     .catch(err => {
+        console.log(err);
         next(err);
     });
-};
+}
 
 exports.read = (req, res, next) => {
     let id = req.params.id;
     model.findById(id)
-    .then(product=>{
-        if (product) {
-            res.send(product);
+    .then(user=>{
+        if (user) {
+            res.send(user);
         }
         else {
             next(err);
         }
     })
-    .catch(err=>next(err));
+    .catch((err)=>{
+        next(err);
+    });
 }
 
 exports.update = (req, res, next) => {
     let id = req.params.id;
-    let part = req.body;
-    model.findByIdAndUpdate(id, part, {useFindAndModify: false, runValidators: true})
-    .then(part=>{
-        if (part) {
-            res.send(part);
+    let user = req.body;
+    model.findByIdAndUpdate(id, user, {useFindAndModify: false, runValidators: true})
+    .then(user=>{
+        if (user) {
+            res.send(user);
         }
         else {
             next(err);
@@ -55,3 +59,4 @@ exports.delete = (req, res, next) => {
     })
     .catch(err=>next(err));
 }
+

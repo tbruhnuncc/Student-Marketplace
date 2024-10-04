@@ -1,6 +1,8 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
+const userController = require("./controllers/userController");
+
 
 // dot env config
 dotenv.config();
@@ -19,6 +21,13 @@ mongoose
   })
   .catch((err) => console.log(err.message));
 
+
+app.use(express.urlencoded({extended: true}));
+
 app.get("/", (req, res) => {
   res.send("Hello World!");
+});
+
+app.get("/test/:id", (req, res, next) => {
+  userController.read(req, res, next);
 });
