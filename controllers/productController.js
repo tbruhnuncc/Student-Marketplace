@@ -1,3 +1,4 @@
+const product = require("../models/product");
 const model = require("../models/product");
 
 exports.create = (req, res, next) => {
@@ -57,27 +58,24 @@ exports.delete = (req, res, next) => {
 }
 
 exports.index = (req, res, next) => {
-    // let product = new model({
-    //     title: "Product",
-    //     description: "This is a product",
-    //     image: "image.png",
-    //     price: 10,
-    //     condition: "Used",
-    //     tags: ["tag1", "tag2"],
-    //     seller: "Seller",
-    //     active: true
-    // });
-    // product.save();
-    // if (product) {
-    //     res.send(product);
-    // }    
-    // else {
-    //     next(err);
-    // }
     model.find()
-    .then(parts=>{
-        if (parts) {
-            res.render("./product/index", {parts});
+    .then(products=>{
+        if (products) {
+            res.render("./product/index", {products});
+        }
+        else {
+            next(err);
+        }
+    })
+    .catch(err=>next(err));
+}
+
+exports.show = (req, res, next) => {
+    let id = req.params.id;
+    model.findById(id)
+    .then(product=>{
+        if (product) {
+            res.render("./product/show", {product});
         }
         else {
             next(err);
