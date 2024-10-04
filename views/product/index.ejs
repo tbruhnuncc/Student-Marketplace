@@ -3,22 +3,22 @@
     <div>
         <h1 class="items-header">Available Listings</h1>
         <div class="listings-wrapper">
-            <% if (parts.length) { %>
-                <% parts.forEach(part=>{ %>
-                    <% if (part.active) { %>
-                        <a href="/parts/<%= part.id %>"><section class="listing">
-                            <img src="<%= part.image %>" class="listing-img" alt="An image of a <%= part.title %>">
-                            <h3 class="listing-header"><%= part.title %></h3>
+            <% if (products.length) { %>
+                <% products.forEach(product=>{ %>
+                    <% if (product.active) { %>
+                        <a href="/products/<%= product.id %>"><section class="listing">
+                            <img src="<%= product.image %>" class="listing-img" alt="An image of a <%= product.title %>">
+                            <h3 class="listing-header"><%= product.title %></h3>
                             <p>
-                                Condition: <%= part.condition %><br>
-                                Price: <%= part.price %><br>
-                                Offers Made: <%= part.totalOffers %><br>
+                                Condition: <%= product.condition %><br>
+                                Price: <%= product.price %><br>
+                                Offers Made: <%= product.totalOffers %><br>
                             </p>
                         </section></a>
                     <% } %>
                 <%});
             } else { %>
-                <p>There are no parts to display.</p>
+                <p>There are no products to display.</p>
             <% } %>
         </div>
     </div>

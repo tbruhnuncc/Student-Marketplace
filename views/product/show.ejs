@@ -1,20 +1,14 @@
 <%- include('../partials/header.ejs')%>
 <main>
     <div>
-        <div class="listings-wrapper">
-            <a href="/parts/<%= part.id %>"><section class="listing">
-                <img src="<%= part.image %>" class="listing-img" alt="An image of a <%= part.title %>">
-                <h3 class="listing-header"><%= part.title %></h3>
-                <p>
-                    Condition: <%= part.condition %><br>
-                    Price: <%= part.price %><br>
-                    Offers Made: <%= part.totalOffers %><br>
-                    Seller: <%= part.seller %><br>
-                    Description: <%= part.description %><br>
-                    Tags: <% forEach(part.tags) { %><%= part.tags %>, <% } %>
-                </p>
-            </section></a>
-        </div>
+        <img src="<%= product.image %>" class="listing-img" alt="An image of a <%= product.title %>">
+        <h3 class="listing-header"><%= product.title %></h3>
+        <p>
+            Condition: <%= product.condition %><br>
+            Price: <%= product.price %><br>
+            Seller: <%= product.seller %><br>
+            Description: <%= product.description %><br>
+        </p>
     </div>
 </main>
 <%- include('../partials/footer.ejs')%>

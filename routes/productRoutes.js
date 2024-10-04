@@ -12,8 +12,8 @@ router.get('/', controller.index)
 // //POST /products: create a new product
 // router.post('/', controller.create)
 
-// //GET /products/:id : send details of one product
-// router.get('/:id', controller.show)
+//GET /products/:id : send details of one product
+router.get('/:id', controller.show)
 
 // //GET /products/:id/edit : send html form for editing a product
 // router.get('/:id/edit',controller.edit)
