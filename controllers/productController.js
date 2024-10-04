@@ -87,3 +87,18 @@ exports.show = (req, res, next) => {
 exports.new = (req, res, next) => {
     res.render("./product/new");
 }
+
+exports.create = (req, res, next) => {
+    console.log(req.body);
+    let product = new model(req.body);
+    product.image = "/images/couch.jpg";
+    product.active = true;
+    product.tags = ["placeholder1", "placeholder2"];
+    product.save()
+    .then(result => {
+        res.redirect("/products");
+    })
+    .catch(err => {
+        next(err);
+    });
+}
