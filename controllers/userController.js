@@ -80,3 +80,55 @@ exports.profile = (req, res, next) => {
       next(err);
     });
 };
+
+exports.create = (req, res, next) => {
+  let user = new model(req.body);
+  user
+    .save()
+    .then((result) => {
+      res.redirect(`/`);
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+}
+
+exports.register = (req, res, next) => {
+  res.render("./user/register");
+}
+
+exports.profile = (req, res, next) => {
+  let id = req.params.id;
+  model
+    .findById(id)
+    .then((user) => {
+      if (user) {
+        res.render("./user/profile", { user: user });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
+}
+
+exports.login = (req, res, next) => {
+  console.log(req.body);
+  let email = req.body.email;
+  let password = req.body.password;
+  model.findOne({ email: email })
+    .then(user => {
+      if (!user) {
+        console.log('wrong email address');
+        } else {
+          if (user.password !== password) {
+            console.log('wrong password');
+            } else {
+              res.redirect(`/users/profile/${user._id}`);
+            }    
+      }
+    })
+    .catch(err => next(err));
+}
+

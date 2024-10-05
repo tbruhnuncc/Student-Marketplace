@@ -36,5 +36,5 @@ app.get("/login", (req, res) => { // Gets back the login page
   res.render("index");
 });
 
-app.use('/user', userRoutes);
+app.use('/users', userRoutes);
 app.use('/products', productRoutes);
