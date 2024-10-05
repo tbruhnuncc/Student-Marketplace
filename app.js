@@ -4,6 +4,9 @@ const dotenv = require("dotenv");
 const productRoutes = require('./routes/productRoutes');
 const userRoutes = require('./routes/userRoutes')
 
+const User = require('./models/user');
+const path = require('path');
+
 
 // dot env config
 dotenv.config();
@@ -29,5 +32,9 @@ app.get("/", (req, res) => {
   res.render("index");
 });
 
+app.get("/login", (req, res) => { // Gets back the login page
+  res.render("index");
+});
+
+app.use('/user', userRoutes);
 app.use('/products', productRoutes);
-app.use('/users', userRoutes);
