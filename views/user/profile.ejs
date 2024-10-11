@@ -1,22 +1,28 @@
 <%- include('../partials/header.ejs') %>
-<div class="container mt-4">
-  <h1 class="text-center">Welcome, <%= user.firstName %>!</h1>
-  <p class="text-center">Here are your profile details:</p>
-  
-  <div style="margin-bottom: 20px;">
-      <h2 style="font-size: 1.5em; margin: 0;">First Name:</h2>
-      <p style="font-size: 1.2em; color: #555;"><%= user.firstName %></p>
-  </div>
-  
-  <div style="margin-bottom: 20px;">
-      <h2 style="font-size: 1.5em; margin: 0;">Last Name:</h2>
-      <p style="font-size: 1.2em; color: #555;"><%= user.lastName %></p>
-  </div>
-  
-  <div style="margin-bottom: 20px;">
-      <h2 style="font-size: 1.5em; margin: 0;">Email:</h2>
-      <p style="font-size: 1.2em; color: #555;"><%= user.email %></p>
-  </div>
-</div>
+    <div class="container mt-4">
+        <h1 class="text-center">Welcome, <%= user.firstName %>!</h1>
+        <p class="text-center">Here are your profile details:</p>
 
-<%- include('../partials/footer.ejs') %>
+        <div style="margin-bottom: 20px;">
+            <h2 style="font-size: 1.5em; margin: 0;">First Name:</h2>
+            <p style="font-size: 1.2em; color: #555;">
+                <%= user.firstName %>
+            </p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <h2 style="font-size: 1.5em; margin: 0;">Last Name:</h2>
+            <p style="font-size: 1.2em; color: #555;">
+                <%= user.lastName %>
+            </p>
+        </div>
+
+        <div style="margin-bottom: 20px;">
+            <h2 style="font-size: 1.5em; margin: 0;">Email:</h2>
+            <p style="font-size: 1.2em; color: #555;">
+                <%= user.email %>
+            </p>
+        </div>
+    </div>
+
+    <%- include('../partials/footer.ejs') %>

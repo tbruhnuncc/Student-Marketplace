@@ -55,5 +55,7 @@ app.get("/login", (req, res) => {
   res.render("index");
 });
 
+app.use(express.static('public'));
+
 app.use("/users", userRoutes);
 app.use("/products", productRoutes);

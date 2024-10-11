@@ -1,23 +1,29 @@
 <%- include('../partials/header.ejs')%>
-<main>
+<main class="container mt-5">
     <div>
-        <h1 class="items-header">Available Listings</h1>
-        <div class="listings-wrapper">
+        <h1 class="items-header text-center mb-4">Available Listings</h1>
+        <div class="row">
             <% if (products.length) { %>
-                <% products.forEach(product=>{ %>
+                <% products.forEach(product => { %>
                     <% if (product.active) { %>
-                        <a href="/products/<%= product.id %>"><section class="listing">
-                            <img src="<%= product.image %>" class="listing-img" alt="An image of a <%= product.title %>">
-                            <h3 class="listing-header"><%= product.title %></h3>
-                            <p>
-                                Condition: <%= product.condition %><br>
-                                Price: <%= product.price %><br>
-                            </p>
-                        </section></a>
+                        <div class="col-md-4 mb-4">
+                            <a href="/products/<%= product.id %>" class="text-decoration-none text-dark">
+                                <div class="card h-100">
+                                    <img src="<%= product.image %>" class="card-img-top" alt="An image of a <%= product.title %>">
+                                    <div class="card-body">
+                                        <h5 class="card-title"><%= product.title %></h5>
+                                        <p class="card-text">
+                                            Condition: <%= product.condition %><br>
+                                            Price: <%= product.price %><br>
+                                        </p>
+                                    </div>
+                                </div>
+                            </a>
+                        </div>
                     <% } %>
-                <%});
-            } else { %>
-                <p>There are no products to display.</p>
+                <% }); %>
+            <% } else { %>
+                <p class="text-center">There are no products to display.</p>
             <% } %>
         </div>
     </div>
