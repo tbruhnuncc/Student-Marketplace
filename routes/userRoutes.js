@@ -1,7 +1,6 @@
-const express = require('express');
-const controller = require('../controllers/userController');
-let passport = require('passport');
-const User = require('../models/user'); // Import the User model
+const express = require("express");
+const controller = require("../controllers/userController");
+let passport = require("passport");
 
 const router = express.Router();
 
@@ -9,10 +8,10 @@ controller.googleStrategy(passport);
 controller.serialization(passport);
 
 // GET route for displaying the sign-up page
-router.get('/register', controller.register);
+router.get("/register", controller.register);
 
 // POST route for handling sign-up form submission
-router.post('/register', controller.create);
+router.post("/register", controller.create);
 
 // //GET /users/new: send html form for creating a new user account
 // router.get('/new', controller.new);
@@ -24,21 +23,24 @@ router.post('/register', controller.create);
 // router.get('/login', controller.getUserLogin);
 
 //POST /users/login: authenticate user's login
-router.post('/login', controller.login);
+router.post("/login", controller.login);
 
 //GET /users/profile: send user's profile page
-router.get('/profile/:id', controller.profile);
+router.get("/profile/:id", controller.profile);
 
 // //POST /users/logout: logout a user
 // router.get('/logout', controller.logout);
 
 // Google auth
-router.get('/login/federated/google', passport.authenticate('google'));
+router.get("/login/federated/google", passport.authenticate("google"));
 
 // Google Auth redirect handling
-router.get('/oauth2/redirect/google', passport.authenticate('google', {
-    successRedirect: '/',
-    failureRedirect: '/login'
-  }));
+router.get(
+  "/oauth2/redirect/google",
+  passport.authenticate("google", {
+    successRedirect: "/",
+    failureRedirect: "/login",
+  })
+);
 
 module.exports = router;

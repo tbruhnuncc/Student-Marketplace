@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const model = require("../models/user");
-let GoogleStrategy = require('passport-google-oidc');
+let GoogleStrategy = require("passport-google-oidc");
 const dotenv = require("dotenv");
 dotenv.config();
 
@@ -95,11 +95,11 @@ exports.create = (req, res, next) => {
       console.log(err);
       next(err);
     });
-}
+};
 
 exports.register = (req, res, next) => {
   res.render("./user/register");
-}
+};
 
 exports.profile = (req, res, next) => {
   let id = req.params.id;
@@ -114,67 +114,88 @@ exports.profile = (req, res, next) => {
       console.log(err);
       next(err);
     });
-}
+};
 
 exports.login = (req, res, next) => {
   console.log(req.body);
   let email = req.body.email;
   let password = req.body.password;
-  model.findOne({ email: email })
-    .then(user => {
+  model
+    .findOne({ email: email })
+    .then((user) => {
       if (!user) {
-        console.log('wrong email address');
+        console.log("wrong email address");
+      } else {
+        if (user.password !== password) {
+          console.log("wrong password");
         } else {
-          if (user.password !== password) {
-            console.log('wrong password');
-            } else {
-              res.redirect(`/users/profile/${user._id}`);
-            }    
+          res.redirect(`/users/profile/${user._id}`);
+        }
       }
     })
-    .catch(err => next(err));
-}
+    .catch((err) => next(err));
+};
 
 exports.googleStrategy = (passport) => {
-  passport.use(new GoogleStrategy({
-    clientID: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    callbackURL: 'users/oauth2/redirect/google',
-    scope: ['profile']
-  }, function(issuer, profile, cb) {
-    model.findOne({ 'federatedCredentials.provider': issuer, 'federatedCredentials.subject': profile.id })
-      .then(user => {
-        console.log(user);
-        if (!user) {
-          const newUser = new model({
-            firstName: profile.name.givenName,
-            lastName: profile.name.familyName,
-            email: profile.emails[0].value,
-            federatedCredentials: [{
-              provider: issuer,
-              subject: profile.id
-            }]
-          });
-          return newUser.save();
+  passport.use(
+    new GoogleStrategy(
+      {
+        clientID: process.env.GOOGLE_CLIENT_ID,
+        clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+        callbackURL: "/oauth2/redirect/google",
+        scope: ["profile", "email"],
+      },
+      function (issuer, profile, cb) {
+        const email = profile.emails[0].value;
+        // Check if email ends with the required domain
+        if (!email.endsWith("@charlotte.edu")) {
+          console.log("Invalid email domain");
+          return cb(null, false, { message: "Invalid email domain" });
         }
-        return user;
-      })
-      .then(user => cb(null, user))
-      .catch(err => cb(err));
-  }));
-}
+        model
+          .findOne({
+            "federatedCredentials.provider": issuer,
+            "federatedCredentials.subject": profile.id,
+          })
+          .then((user) => {
+            if (!user) {
+              const newUser = new model({
+                firstName: profile.name.givenName,
+                lastName: profile.name.familyName,
+                email: profile.emails[0].value,
+                federatedCredentials: [
+                  {
+                    provider: issuer,
+                    subject: profile.id,
+                  },
+                ],
+              });
+              return newUser.save();
+            }
+            return user;
+          })
+          .then((user) => cb(null, user))
+          .catch((err) => cb(err));
+      }
+    )
+  );
+};
 
 exports.serialization = (passport) => {
-  passport.serializeUser(function(user, cb) {
-    process.nextTick(function() {
-      cb(null, { id: user.id, username: user.username, name: user.name });
+  passport.serializeUser(function (user, cb) {
+    process.nextTick(function () {
+      cb(null, {
+        id: user.id,
+        firstName: user.firstName,
+        lastName: user.lastName,
+        email: user.email,
+      });
     });
   });
-  
-  passport.deserializeUser(function(user, cb) {
-    process.nextTick(function() {
+
+  passport.deserializeUser(function (user, cb) {
+    process.nextTick(function () {
       return cb(null, user);
     });
   });
-}
-
+};
