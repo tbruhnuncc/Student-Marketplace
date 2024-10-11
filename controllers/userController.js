@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 const model = require("../models/user");
+let GoogleStrategy = require("passport-google-oidc");
+const dotenv = require("dotenv");
+dotenv.config();
 
 exports.create = (req, res, next) => {
     console.log(req.body);
@@ -92,43 +95,43 @@ exports.create = (req, res, next) => {
             console.log(err);
             next(err);
         });
-}
+};
 
 exports.register = (req, res, next) => {
-    res.render("./user/register");
+  res.render("./user/register");
 }
 
 exports.profile = (req, res, next) => {
-    let id = req.params.id;
-    model
-        .findById(id)
-        .then((user) => {
-            if (user) {
-                res.render("./user/profile", { user: user });
-            }
-        })
-        .catch((err) => {
-            console.log(err);
-            next(err);
-        });
+  let id = req.params.id;
+  model
+    .findById(id)
+    .then((user) => {
+      if (user) {
+        res.render("./user/profile", { user: user });
+      }
+    })
+    .catch((err) => {
+      console.log(err);
+      next(err);
+    });
 }
 
 exports.login = (req, res, next) => {
-    console.log(req.body);
-    let email = req.body.email;
-    let password = req.body.password;
-    model.findOne({ email: email })
-        .then(user => {
-            if (!user) {
-                console.log('wrong email address');
+  console.log(req.body);
+  let email = req.body.email;
+  let password = req.body.password;
+  model.findOne({ email: email })
+    .then(user => {
+      if (!user) {
+        console.log('wrong email address');
+        } else {
+          if (user.password !== password) {
+            console.log('wrong password');
             } else {
-                if (user.password !== password) {
-                    console.log('wrong password');
-                } else {
-                    res.redirect(`/users/profile/${user._id}`);
-                }
-            }
-        })
-        .catch(err => next(err));
+              res.redirect(`/users/profile/${user._id}`);
+            }    
+      }
+    })
+    .catch(err => next(err));
 }
 
