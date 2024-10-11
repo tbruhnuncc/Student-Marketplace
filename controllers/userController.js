@@ -1,5 +1,8 @@
 const mongoose = require("mongoose");
 const model = require("../models/user");
+let GoogleStrategy = require('passport-google-oidc');
+const dotenv = require("dotenv");
+dotenv.config();
 
 exports.create = (req, res, next) => {
   console.log(req.body);
@@ -130,5 +133,48 @@ exports.login = (req, res, next) => {
       }
     })
     .catch(err => next(err));
+}
+
+exports.googleStrategy = (passport) => {
+  passport.use(new GoogleStrategy({
+    clientID: process.env.GOOGLE_CLIENT_ID,
+    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+    callbackURL: 'users/oauth2/redirect/google',
+    scope: ['profile']
+  }, function(issuer, profile, cb) {
+    model.findOne({ 'federatedCredentials.provider': issuer, 'federatedCredentials.subject': profile.id })
+      .then(user => {
+        console.log(user);
+        if (!user) {
+          const newUser = new model({
+            firstName: profile.name.givenName,
+            lastName: profile.name.familyName,
+            email: profile.emails[0].value,
+            federatedCredentials: [{
+              provider: issuer,
+              subject: profile.id
+            }]
+          });
+          return newUser.save();
+        }
+        return user;
+      })
+      .then(user => cb(null, user))
+      .catch(err => cb(err));
+  }));
+}
+
+exports.serialization = (passport) => {
+  passport.serializeUser(function(user, cb) {
+    process.nextTick(function() {
+      cb(null, { id: user.id, username: user.username, name: user.name });
+    });
+  });
+  
+  passport.deserializeUser(function(user, cb) {
+    process.nextTick(function() {
+      return cb(null, user);
+    });
+  });
 }
 

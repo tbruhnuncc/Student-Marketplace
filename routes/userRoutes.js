@@ -1,8 +1,12 @@
 const express = require('express');
 const controller = require('../controllers/userController');
+let passport = require('passport');
 const User = require('../models/user'); // Import the User model
 
 const router = express.Router();
+
+controller.googleStrategy(passport);
+controller.serialization(passport);
 
 // GET route for displaying the sign-up page
 router.get('/register', controller.register);
@@ -27,5 +31,14 @@ router.get('/profile/:id', controller.profile);
 
 // //POST /users/logout: logout a user
 // router.get('/logout', controller.logout);
+
+// Google auth
+router.get('/login/federated/google', passport.authenticate('google'));
+
+// Google Auth redirect handling
+router.get('/oauth2/redirect/google', passport.authenticate('google', {
+    successRedirect: '/',
+    failureRedirect: '/login'
+  }));
 
 module.exports = router;
