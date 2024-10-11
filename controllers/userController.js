@@ -102,18 +102,23 @@ exports.register = (req, res, next) => {
 };
 
 exports.profile = (req, res, next) => {
-  let id = req.params.id;
-  model
-    .findById(id)
-    .then((user) => {
-      if (user) {
-        res.render("./user/profile", { user: user });
-      }
-    })
-    .catch((err) => {
-      console.log(err);
-      next(err);
-    });
+  //let id = req.params.id;
+  let user = req.session.passport.user;
+
+  console.log(user);
+
+  res.render("./user/profile", { user: user });
+  // model
+  //   .findById(id)
+  //   .then((user) => {
+  //     if (user) {
+  //       res.render("./user/profile", { user: user });
+  //     }
+  //   })
+  //   .catch((err) => {
+  //     console.log(err);
+  //     next(err);
+  //   });
 };
 
 exports.login = (req, res, next) => {

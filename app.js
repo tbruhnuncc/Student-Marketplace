@@ -45,8 +45,8 @@ app.get("/", (req, res) => {
 app.get(
   "/oauth2/redirect/google",
   passport.authenticate("google", {
-    successRedirect: "/",
-    failureRedirect: "/login",
+    successRedirect: "/users/profile",
+    failureRedirect: "/",
   })
 );
 
