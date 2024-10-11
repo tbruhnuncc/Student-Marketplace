@@ -1,14 +1,16 @@
 <%- include('../partials/header.ejs')%>
-<main>
-    <div>
-        <img src="<%= product.image %>" class="listing-img" alt="An image of a <%= product.title %>">
-        <h3 class="listing-header"><%= product.title %></h3>
-        <p>
-            Condition: <%= product.condition %><br>
-            Price: <%= product.price %><br>
-            Seller: <%= product.seller %><br>
-            Description: <%= product.description %><br>
-        </p>
+<main class="container mt-5">
+    <div class="card">
+        <img src="<%= product.image %>" class="card-img-top" alt="An image of a <%= product.title %>">
+        <div class="card-body"></div>
+            <h3 class="card-title"><%= product.title %></h3>
+            <p class="card-text">
+                <strong>Condition:</strong> <%= product.condition %><br>
+                <strong>Price:</strong> <%= product.price %><br>
+                <strong>Seller:</strong> <%= product.seller %><br>
+                <strong>Description:</strong> <%= product.description %><br>
+            </p>
+        </div>
     </div>
 </main>
 <%- include('../partials/footer.ejs')%>
