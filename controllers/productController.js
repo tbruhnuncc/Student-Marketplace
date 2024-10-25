@@ -1,17 +1,6 @@
 const product = require("../models/product");
 const model = require("../models/product");
 
-exports.create = (req, res, next) => {
-    let product = new model(req.body);
-    product.save()
-    .then(result => {
-        res.send(result);
-    })
-    .catch(err => {
-        next(err);
-    });
-};
-
 exports.read = (req, res, next) => {
     let id = req.params.id;
     model.findById(id)
@@ -91,7 +80,8 @@ exports.new = (req, res, next) => {
 exports.create = (req, res, next) => {
     console.log(req.body);
     let product = new model(req.body);
-    product.image = "/images/couch.jpg";
+    product.seller = req.session.passport.user.firstName + " " + req.session.passport.user.lastName;
+    product.image = "/images/" + req.file.filename;
     product.active = true;
     product.tags = ["placeholder1", "placeholder2"];
     product.save()
@@ -102,3 +92,6 @@ exports.create = (req, res, next) => {
         next(err);
     });
 }
+
+
+    
