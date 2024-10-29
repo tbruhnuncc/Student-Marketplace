@@ -125,7 +125,7 @@ exports.googleStrategy = (passport) => {
       {
         clientID: process.env.GOOGLE_CLIENT_ID,
         clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-        callbackURL: "/oauth2/redirect/google",
+        callbackURL: "/users/oauth2/redirect/google",
         scope: ["profile", "email"],
       },
       function (issuer, profile, cb) {
