@@ -190,16 +190,14 @@ exports.serialization = (passport) => {
   passport.serializeUser(function (user, cb) {
     process.nextTick(function () {
       cb(null, {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
+        id: user._id,
       });
     });
   });
 
   passport.deserializeUser(function (user, cb) {
     process.nextTick(function () {
+      user.id = new mongoose.Types.ObjectId(user.id);
       return cb(null, user);
     });
   });
