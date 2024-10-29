@@ -52,4 +52,11 @@ Welcome to the UNCC Student Marketplace, an exclusive online marketplace designe
 
 ## Progress
 
-We are currently in the planning phase of Sprint 1
+We are currently in the planning phase of Sprint 2
+
+Backlog:
+1. Profile page should include listings created by user.
+2. Update and delete functionalities should work on user listings.
+3. User uploaded listings should allow images.
+4. Product browsing should include tag based searching.
+5. Product browsing should include filter options (price, condition, date created, alphabetical, etc).

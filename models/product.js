@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Schema = mongoose.Schema;
 
 const productSchema = new mongoose.Schema({
   title: {
@@ -6,7 +7,8 @@ const productSchema = new mongoose.Schema({
     required: [true, "Product title is required"],
   },
   seller: {
-    type: String,
+    type: Schema.Types.ObjectId,
+    ref: "User",
     required: [true, "Product seller is required"],
   },
   condition: {

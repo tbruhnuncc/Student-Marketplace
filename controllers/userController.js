@@ -69,11 +69,10 @@ exports.delete = (req, res, next) => {
 };
 
 exports.profile = (req, res, next) => {
-  let id = req.params.id;
+  let id = req.session.passport.user.id;
   model
     .findById(id)
     .then((user) => {
-      console.log(user);
       if (user) {
         res.render("./user/profile", { user: user });
       }
@@ -101,28 +100,7 @@ exports.register = (req, res, next) => {
   res.render("./user/register");
 };
 
-exports.profile = (req, res, next) => {
-  //let id = req.params.id;
-  let user = req.session.passport.user;
-
-  console.log(user);
-
-  res.render("./user/profile", { user: user });
-  // model
-  //   .findById(id)
-  //   .then((user) => {
-  //     if (user) {
-  //       res.render("./user/profile", { user: user });
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //     next(err);
-  //   });
-};
-
 exports.login = (req, res, next) => {
-  console.log(req.body);
   let email = req.body.email;
   let password = req.body.password;
   model
@@ -190,16 +168,14 @@ exports.serialization = (passport) => {
   passport.serializeUser(function (user, cb) {
     process.nextTick(function () {
       cb(null, {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email,
+        id: user._id,
       });
     });
   });
 
   passport.deserializeUser(function (user, cb) {
     process.nextTick(function () {
+      user.id = new mongoose.Types.ObjectId(user.id);
       return cb(null, user);
     });
   });
