@@ -3,6 +3,7 @@
     <h1 class="text-center">Welcome to the Student Marketplace</h1>
     <p>This is a platform where students can buy and sell items easily. Browse through listings, post items for sale, and manage your profile all in one place.</p>
 </div>
+<% if (authenticated === false) { %>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
@@ -16,6 +17,7 @@
         </div>
     </div>
 </div>
+<% } %>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 text-center">

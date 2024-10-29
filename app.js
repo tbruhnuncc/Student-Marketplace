@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 const session = require("express-session");
 const MongoStore = require("connect-mongo");
 let passport = require("passport");
+const flash = require("connect-flash");
 const dotenv = require("dotenv");
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
@@ -33,22 +34,26 @@ app.use(
   })
 );
 
+app.use(flash());
+
+app.use((req, res, next) => {
+  res.locals.errorMessages = req.flash("error");
+  res.locals.successMessages = req.flash("success");
+  next();
+});
+
 app.use(passport.authenticate("session"));
 
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 
 app.get("/", (req, res) => {
-  res.render("index");
+  let authenticated = false;
+  if (req.session.passport && req.session.passport.user) {
+    authenticated = true;
+  }
+  res.render("index", { authenticated: authenticated });
 });
-
-app.get(
-  "/oauth2/redirect/google",
-  passport.authenticate("google", {
-    successRedirect: "/users/profile",
-    failureRedirect: "/",
-  })
-);
 
 app.get("/login", (req, res) => {
   // Gets back the login page

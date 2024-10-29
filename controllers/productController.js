@@ -91,6 +91,7 @@ exports.new = (req, res, next) => {
 exports.create = (req, res, next) => {
     console.log(req.body);
     let product = new model(req.body);
+    product.seller = req.session.passport.user.firstName + " " + req.session.passport.user.lastName;
     product.image = "/images/couch.jpg";
     product.active = true;
     product.tags = ["placeholder1", "placeholder2"];
