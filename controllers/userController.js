@@ -69,11 +69,10 @@ exports.delete = (req, res, next) => {
 };
 
 exports.profile = (req, res, next) => {
-  let id = req.params.id;
+  let id = req.session.passport.user.id;
   model
     .findById(id)
     .then((user) => {
-      console.log(user);
       if (user) {
         res.render("./user/profile", { user: user });
       }
@@ -101,28 +100,7 @@ exports.register = (req, res, next) => {
   res.render("./user/register");
 };
 
-exports.profile = (req, res, next) => {
-  //let id = req.params.id;
-  let user = req.session.passport.user;
-
-  console.log(user);
-
-  res.render("./user/profile", { user: user });
-  // model
-  //   .findById(id)
-  //   .then((user) => {
-  //     if (user) {
-  //       res.render("./user/profile", { user: user });
-  //     }
-  //   })
-  //   .catch((err) => {
-  //     console.log(err);
-  //     next(err);
-  //   });
-};
-
 exports.login = (req, res, next) => {
-  console.log(req.body);
   let email = req.body.email;
   let password = req.body.password;
   model
