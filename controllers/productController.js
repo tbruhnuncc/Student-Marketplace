@@ -1,6 +1,4 @@
-const product = require("../models/product");
 const model = require("../models/product");
-const mongoose = require("mongoose");
 
 exports.read = (req, res, next) => {
   let id = req.params.id;
@@ -67,6 +65,7 @@ exports.show = (req, res, next) => {
   let id = req.params.id;
   model
     .findById(id)
+    .populate("seller", "firstName lastName")
     .then((product) => {
       if (product) {
         res.render("./product/show", { product });
