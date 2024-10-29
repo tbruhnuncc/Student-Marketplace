@@ -1,5 +1,6 @@
 const express = require('express');
 const controller = require('../controllers/productController');
+const { isLoggedIn, isGuest } = require("../middleware/auth");
 
 const router = express.Router();
 
@@ -31,10 +32,10 @@ const upload = multer({storage, fileFilter, limits: {fileSize: 2*1024_1024}}).si
 router.get('/', controller.index)
 
 //GET /products/new: send html form for creating a new product
-router.get('/new', controller.new)
+router.get('/new', isLoggedIn, controller.new)
 
 //POST /products: create a new product
-router.post('/', upload, controller.create)
+router.post('/', isLoggedIn, upload, controller.create)
 
 //GET /products/:id : send details of one product
 router.get('/:id', controller.show)
