@@ -1,5 +1,4 @@
 const product = require("../models/product.js");
-const { isLoggedIn, isGuest } = require("../middleware/auth");
 
 exports.isGuest = (req, res, next) => {
   if (!req.session.passport || req.session.passport.user) {
