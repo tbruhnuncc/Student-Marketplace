@@ -7,6 +7,7 @@ const flash = require("connect-flash");
 const dotenv = require("dotenv");
 const productRoutes = require("./routes/productRoutes");
 const userRoutes = require("./routes/userRoutes");
+const methodOverride = require('method-override');
 
 // dot env config
 dotenv.config();
@@ -47,6 +48,7 @@ app.use(passport.authenticate("session"));
 app.use(express.urlencoded({ extended: true }));
 app.set("view engine", "ejs");
 app.use(express.static('public'));
+app.use(methodOverride('_method'));
 
 
 app.get("/", (req, res) => {

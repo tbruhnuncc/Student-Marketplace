@@ -10,6 +10,9 @@
                 <strong>Seller:</strong> <%= product.seller.firstName %> <%= product.seller.lastName %><br>
                 <strong>Description:</strong> <%= product.description %><br>
             </p>
+            <form>
+                <button type="submit" formmethod="GET" formaction="<%= product.id%>/edit"><i class="fa-regular fa-pen-to-square"></i></button>
+            </form>
         </div>
     </div>
 </main>

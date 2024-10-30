@@ -17,11 +17,11 @@ router.post('/', isLoggedIn, upload, controller.create)
 //GET /products/:id : send details of one product
 router.get('/:id', controller.show)
 
-// //GET /products/:id/edit : send html form for editing a product
-// router.get('/:id/edit',controller.edit)
+//GET /products/:id/edit : send html form for editing a product
+router.get('/:id/edit', controller.edit)
 
-// //PUT /products/:id : update product identified by id
-// router.put('/:id', controller.update)
+//PUT /products/:id : update product identified by id
+router.put('/:id', upload,controller.update)
 
 // //DELETE /products/:id : delete product identified by id
 // router.delete('/:id', controller.delete)
