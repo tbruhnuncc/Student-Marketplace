@@ -1,28 +1,41 @@
 <%- include('../partials/header.ejs') %>
-    <div class="container mt-4">
-        <h1 class="text-center">Welcome, <%= user.firstName %>!</h1>
-        <p class="text-center">Here are your profile details:</p>
 
-        <div style="margin-bottom: 20px;">
-            <h2 style="font-size: 1.5em; margin: 0;">First Name:</h2>
-            <p style="font-size: 1.2em; color: #555;">
-                <%= user.firstName %>
-            </p>
+<section class="profile-section container mt-4 text-center">
+    <header>
+        <h1>Welcome, <%= user.firstName %>!</h1>
+        <p>Here are your profile details:</p>
+        <img src="../public/images/defaultpro.jpg" alt="">
+    </header>
+
+    <div class="profile-details">
+        <div class="profile-item">
+            <h2>First Name:</h2>
+            <p><%= user.firstName %></p>
         </div>
-
-        <div style="margin-bottom: 20px;">
-            <h2 style="font-size: 1.5em; margin: 0;">Last Name:</h2>
-            <p style="font-size: 1.2em; color: #555;">
-                <%= user.lastName %>
-            </p>
+        <div class="profile-item">
+            <h2>Last Name:</h2>
+            <p><%= user.lastName %></p>
         </div>
-
-        <div style="margin-bottom: 20px;">
-            <h2 style="font-size: 1.5em; margin: 0;">Email:</h2>
-            <p style="font-size: 1.2em; color: #555;">
-                <%= user.email %>
-            </p>
+        <div class="profile-item">
+            <h2>Email:</h2>
+            <p><%= user.email %></p>
         </div>
     </div>
+</section>
 
-    <%- include('../partials/footer.ejs') %>
+<section class="product-section container mt-5 text-center">
+    <h2>Product Listing</h2>
+    <div class="product-list">
+        <% products.forEach(product => { %>
+            <div class="product-item">
+                <a href="/products/<%= product._id %>">
+                    <h3><%= product.name %></h3>
+                    <p><%= product.description %></p>
+                    <p>$<%= product.price.toFixed(2) %></p>
+                </a>
+            </div>
+        <% }) %>
+    </div>
+</section>
+
+<%- include('../partials/footer.ejs') %>

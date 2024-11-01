@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const model = require("../models/user");
+const Product = require("../models/product");
 let GoogleStrategy = require("passport-google-oidc");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -70,11 +71,19 @@ exports.delete = (req, res, next) => {
 
 exports.profile = (req, res, next) => {
   let id = req.session.passport.user.id;
-  model
-    .findById(id)
+  
+  model.findById(id)
     .then((user) => {
       if (user) {
-        res.render("./user/profile", { user: user });
+        // Fetch products and pass both user and products to the view
+        return Product.find().then((products) => {
+          res.render("./user/profile", { user: user, products: products });
+        });
+      } else {
+        // Handle the case where the user is not found
+        const error = new Error("User not found");
+        error.status = 404;
+        next(error);
       }
     })
     .catch((err) => {
@@ -82,6 +91,7 @@ exports.profile = (req, res, next) => {
       next(err);
     });
 };
+
 
 exports.create = (req, res, next) => {
   let user = new model(req.body);
