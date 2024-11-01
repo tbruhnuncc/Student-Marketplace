@@ -34,7 +34,7 @@ exports.index = (req, res, next) => {
   const regex = new RegExp("^" + searchString, "i");
   if (searchString) {
     const regex = new RegExp("^" + searchString, "i");
-    query = { $or: [{ title: regex }, { details: regex }] };
+    query = { $or: [{ title: regex }, { description: regex }] };
   }
   let products = model
     .find(query)
