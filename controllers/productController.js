@@ -29,14 +29,18 @@ exports.read = (req, res, next) => {
 // };
 
 exports.index = (req, res, next) => {
-  model
-    .find()
+  let query = {};
+  let searchString = req.query.search;
+  const regex = new RegExp("^" + searchString, "i");
+  if (searchString) {
+    const regex = new RegExp("^" + searchString, "i");
+    query = { $or: [{ title: regex }, { details: regex }] };
+  }
+  let products = model
+    .find(query)
     .then((products) => {
-      if (products) {
-        res.render("./product/index", { products });
-      } else {
-        next(err);
-      }
+      products = products.sort((a, b) => a.price - b.price);
+      res.render("./product/index", { products });
     })
     .catch((err) => next(err));
 };
@@ -79,30 +83,30 @@ exports.create = (req, res, next) => {
 exports.edit = (req, res, next) => {
   let id = req.params.id;
 
-  if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-    let err = new Error('Invalid product id');
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    let err = new Error("Invalid product id");
     err.status = 400;
     return next(err);
   }
 
   model
-  .findById(id)
-  .then(product=> {
-    if(product) {
-      res.render('./product/edit', {product});
-    } else {
-      next(err);
-    }
-  })
-  .catch(err=>next(err));
-}
+    .findById(id)
+    .then((product) => {
+      if (product) {
+        res.render("./product/edit", { product });
+      } else {
+        next(err);
+      }
+    })
+    .catch((err) => next(err));
+};
 
 exports.update = (req, res, next) => {
   let id = req.params.id;
   let product = model.findById(id);
 
-  if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-    let err = new Error('Invalid product id');
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    let err = new Error("Invalid product id");
     err.status = 400;
     return next(err);
   }
@@ -112,43 +116,44 @@ exports.update = (req, res, next) => {
     condition: req.body.condition,
     price: req.body.price,
     description: req.body.description,
-    image: req.body.existingImage
+    image: req.body.existingImage,
   };
 
   if (req.file) {
-    updatedProduct.image = '/images/' + req.file.filename;
+    updatedProduct.image = "/images/" + req.file.filename;
   }
 
-  model.findByIdAndUpdate(id, updatedProduct, {runValidators: true})
-  .then(product=> {
-    if(product) {
-      res.redirect('/products/' + id);
-    } else {
+  model
+    .findByIdAndUpdate(id, updatedProduct, { runValidators: true })
+    .then((product) => {
+      if (product) {
+        res.redirect("/products/" + id);
+      } else {
+        next(err);
+      }
+    })
+    .catch((err) => {
       next(err);
-    }
-  })
-  .catch(err=>{
-    next(err);
-  });
-
-}
+    });
+};
 
 exports.delete = (req, res, next) => {
   let id = req.params.id;
 
-  if(!id.match(/^[0-9a-fA-F]{24}$/)) {
-    let err = new Error('Invalid product id');
+  if (!id.match(/^[0-9a-fA-F]{24}$/)) {
+    let err = new Error("Invalid product id");
     err.status = 400;
     return next(err);
   }
 
-  model.findByIdAndDelete(id)
-  .then(product => {
-    if(product) {
-      res.redirect('/users/profile');
-    } else {
-      next(err)
-    }
-  })
-  .catch(err=> next(err));
-}
+  model
+    .findByIdAndDelete(id)
+    .then((product) => {
+      if (product) {
+        res.redirect("/users/profile");
+      } else {
+        next(err);
+      }
+    })
+    .catch((err) => next(err));
+};
