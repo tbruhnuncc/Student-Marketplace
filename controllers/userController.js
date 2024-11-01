@@ -1,5 +1,6 @@
 const mongoose = require("mongoose");
 const model = require("../models/user");
+const productModel = require('../models/product');
 let GoogleStrategy = require("passport-google-oidc");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -73,27 +74,20 @@ exports.profile = (req, res, next) => {
   model
     .findById(id)
     .then((user) => {
-      if (user) {
-        res.render("./user/profile", { user: user });
+      if ({user}) {
+        //finds all products created by this user
+        return productModel.find({seller: id}).then((products)=> ({user, products}));
+        //res.render("./user/profile", { user: user });   
       }
     })
-    .catch((err) => {
-      console.log(err);
-      next(err);
-    });
-};
-
-exports.create = (req, res, next) => {
-  let user = new model(req.body);
-  user
-    .save()
-    .then((result) => {
-      res.redirect(`/`);
+    .then(({user, products}) => {
+      res.render("./user/profile", {user, products});
     })
     .catch((err) => {
       console.log(err);
       next(err);
     });
+    
 };
 
 exports.register = (req, res, next) => {

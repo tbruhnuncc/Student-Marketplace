@@ -9,6 +9,10 @@
                 <strong>Price:</strong> <%= product.price %><br>
                 <strong>Seller:</strong> <%= product.seller.firstName %> <%= product.seller.lastName %><br>
                 <strong>Description:</strong> <%= product.description %><br>
+                <form class="item-buttons">
+                    <button type= "submit" formmethod= "GET" formaction= "<%= product.id%>/edit">Edit</button>
+                    <button type="submit" formmethod="POST" formaction="<%= product.id%>?_method=DELETE">Delete</button>                    
+                </form>
             </p>
         </div>
     </div>
