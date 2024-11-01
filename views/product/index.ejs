@@ -1,31 +1,41 @@
 <%- include('../partials/header.ejs')%>
 <main class="container mt-5">
-    <div>
-        <h1 class="items-header text-center mb-4">Available Listings</h1>
-        <div class="row">
-            <% if (products.length) { %>
-                <% products.forEach(product => { %>
-                    <% if (product.active) { %>
-                        <div class="col-md-4 mb-4">
-                            <a href="/products/<%= product.id %>" class="text-decoration-none text-dark">
-                                <div class="card h-100">
-                                    <img src="<%= product.image %>" class="card-img-top" alt="An image of a <%= product.title %>">
-                                    <div class="card-body">
-                                        <h5 class="card-title"><%= product.title %></h5>
-                                        <p class="card-text">
-                                            Condition: <%= product.condition %><br>
-                                            Price: <%= product.price %><br>
-                                        </p>
-                                    </div>
-                                </div>
-                            </a>
-                        </div>
-                    <% } %>
-                <% }); %>
-            <% } else { %>
-                <p class="text-center">There are no products to display.</p>
-            <% } %>
-        </div>
+  <div>
+    <div class="search-bar">
+      <span><i class="fa-solid fa-magnifying-glass"></i></span>
+      <form action="/products" method="get">
+        <input type="search" name="search" placeholder="search" />
+      </form>
     </div>
+    <h1 class="items-header text-center mb-4">Available Listings</h1>
+    <div class="row">
+      <% if (products.length) { %> <% products.forEach(product => { %> <% if
+      (product.active) { %>
+      <div class="col-md-4 mb-4">
+        <a
+          href="/products/<%= product.id %>"
+          class="text-decoration-none text-dark"
+        >
+          <div class="card h-100">
+            <img
+              src="<%= product.image %>"
+              class="card-img-top"
+              alt="An image of a <%= product.title %>"
+            />
+            <div class="card-body">
+              <h5 class="card-title"><%= product.title %></h5>
+              <p class="card-text">
+                Condition: <%= product.condition %><br />
+                Price: <%= product.price %><br />
+              </p>
+            </div>
+          </div>
+        </a>
+      </div>
+      <% } %> <% }); %> <% } else { %>
+      <p class="text-center">There are no products to display.</p>
+      <% } %>
+    </div>
+  </div>
 </main>
 <%- include('../partials/footer.ejs')%>
