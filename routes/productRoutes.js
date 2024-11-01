@@ -23,8 +23,8 @@ router.get('/:id/edit', controller.edit)
 //PUT /products/:id : update product identified by id
 router.put('/:id', upload,controller.update)
 
-// //DELETE /products/:id : delete product identified by id
-// router.delete('/:id', controller.delete)
+//DELETE /products/:id : delete product identified by id
+router.delete('/:id', controller.delete)
 
 // router.use('/offers', offerRoutes)
 

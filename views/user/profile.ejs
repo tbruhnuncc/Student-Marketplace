@@ -1,28 +1,53 @@
 <%- include('../partials/header.ejs') %>
-    <div class="container mt-4">
-        <h1 class="text-center">Welcome, <%= user.firstName %>!</h1>
-        <p class="text-center">Here are your profile details:</p>
+<div class="container mt-4">
+  <h1 class="text-center">Welcome, <%= user.firstName %>!</h1>
+  <p class="text-center">Here are your profile details:</p>
 
-        <div style="margin-bottom: 20px;">
-            <h2 style="font-size: 1.5em; margin: 0;">First Name:</h2>
-            <p style="font-size: 1.2em; color: #555;">
-                <%= user.firstName %>
-            </p>
-        </div>
+  <div style="display: flex; justify-content: space-between;">
 
-        <div style="margin-bottom: 20px;">
-            <h2 style="font-size: 1.5em; margin: 0;">Last Name:</h2>
-            <p style="font-size: 1.2em; color: #555;">
-                <%= user.lastName %>
-            </p>
-        </div>
+    <div style="width: 45%;">
 
-        <div style="margin-bottom: 20px;">
-            <h2 style="font-size: 1.5em; margin: 0;">Email:</h2>
-            <p style="font-size: 1.2em; color: #555;">
-                <%= user.email %>
-            </p>
-        </div>
+      <h2 style="font-size: 1.5em; margin: 0;">First Name:</h2>
+      <p style="font-size: 1.2em; color: #555;"><%= user.firstName %></p>
+
+      <h2 style="font-size: 1.5em; margin: 0;">Last Name:</h2>
+      <p style="font-size: 1.2em; color: #555;"><%= user.lastName %></p>
+
+      <h2 style="font-size: 1.5em; margin: 0;">Email:</h2>
+      <p style="font-size: 1.2em; color: #555;"><%= user.email %></p>
+    
     </div>
 
-    <%- include('../partials/footer.ejs') %>
+    <div style="width: 50%;">
+      
+      <h2 class="text-center">Your Listings</h2>
+      <div class="row">
+    
+        <% if (products.length) { %>
+            <% products.forEach(product => { %>
+                <% if (product.active) { %>
+                    <div class="col-md-4 mb-4">
+                        <a href="/products/<%= product.id %>" class="text-decoration-none text-dark">
+                            <div class="card h-100">
+                                <img src="<%= product.image %>" class="card-img-top" alt="An image of a <%= product.title %>">
+                                <div class="card-body">
+                                    <h5 class="card-title"><%= product.title %></h5>
+                                    <p class="card-text">
+                                        Condition: <%= product.condition %><br>
+                                        Price: <%= product.price %><br>
+                                    </p>
+                                </div>
+                            </div>
+                        </a>
+                    </div>
+                <% } %>
+            <% }); %>
+        <% } else { %>
+            <p class="text-center">There are no products to display.</p>
+        <% } %>
+    
+    </div>
+    </div>
+  </div>
+</div>
+<%- include('../partials/footer.ejs') %>
