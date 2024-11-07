@@ -26,7 +26,7 @@ exports.isSeller = (req, res, next) => {
     .findById(id)
     .then((product) => {
       if (product) {
-        if (product.seller == req.session.passport.user) {
+        if (product.seller.equals(req.session.passport.user.id)) {
           return next();
         } else {
           let err = new Error("Unauthorized to access the resource");
@@ -48,7 +48,7 @@ exports.isNotSeller = (req, res, next) => {
     .findById(id)
     .then((product) => {
       if (product) {
-        if (product.seller != req.session.passport.user) {
+        if (!product.seller.equals(req.session.passport.user.id)) {
           return next();
         } else {
           let err = new Error("Unauthorized to access the resource");
