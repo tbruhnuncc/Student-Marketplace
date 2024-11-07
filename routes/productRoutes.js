@@ -1,6 +1,6 @@
 const express = require("express");
 const controller = require("../controllers/productController");
-const { isLoggedIn, isGuest } = require("../middleware/auth");
+const { isLoggedIn, isGuest, isSeller, isNotSeller } = require("../middleware/auth");
 const upload = require("../middleware/fileUpload");
 
 const router = express.Router();
@@ -18,14 +18,12 @@ router.post("/", isLoggedIn, upload, controller.create);
 router.get("/:id", controller.show);
 
 //GET /products/:id/edit : send html form for editing a product
-router.get("/:id/edit", controller.edit);
+router.get("/:id/edit", isLoggedIn, isSeller, controller.edit);
 
 //PUT /products/:id : update product identified by id
-router.put("/:id", upload, controller.update);
+router.put("/:id", upload, isLoggedIn, isSeller, controller.update);
 
 //DELETE /products/:id : delete product identified by id
-router.delete("/:id", controller.delete);
-
-// router.use('/offers', offerRoutes)
+router.delete("/:id", isLoggedIn, isSeller, controller.delete);
 
 module.exports = router;
