@@ -19,3 +19,47 @@ exports.isLoggedIn = (req, res, next) => {
     return res.redirect("/");
   }
 };
+
+exports.isSeller = (req, res, next) => {
+  let id = req.params.id;
+  product
+    .findById(id)
+    .then((product) => {
+      if (product) {
+        if (product.seller == req.session.passport.user) {
+          return next();
+        } else {
+          let err = new Error("Unauthorized to access the resource");
+          err.status = 401;
+          return next(err);
+        }
+      } else {
+        let err = new Error("Cannot find listing with id", id);
+        err.status = 404;
+        next(err);
+      }
+    })
+    .catch((err) => next(err));
+};
+
+exports.isNotSeller = (req, res, next) => {
+  let id = req.params.id;
+  product
+    .findById(id)
+    .then((product) => {
+      if (product) {
+        if (product.seller != req.session.passport.user) {
+          return next();
+        } else {
+          let err = new Error("Unauthorized to access the resource");
+          err.status = 401;
+          return next(err);
+        }
+      } else {
+        let err = new Error("Cannot find listing with id", id);
+        err.status = 404;
+        next(err);
+      }
+    })
+    .catch((err) => next(err));
+};
