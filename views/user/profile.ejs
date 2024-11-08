@@ -68,7 +68,7 @@
                                             <h5 class="card-title text-truncate" style="max-width: 100%;"><%= product.title %></h5> <!-- Added text truncation for long titles -->
                                             <p class="card-text text-muted">
                                                 <strong>Condition:</strong> <%= product.condition %><br>
-                                                <strong>Price:</strong> $<%= product.price %><br>
+                                                <strong>Price:</strong> $<%= product.price.toFixed(2) %><br>
                                             </p>
                                         </div>
                                     </div>

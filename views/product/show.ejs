@@ -1,20 +1,31 @@
-<%- include('../partials/header.ejs')%>
+<%- include('../partials/header.ejs') %>
 <main class="container mt-5">
-    <div class="card">
-        <img src="<%= product.image %>" class="card-img-top" alt="An image of a <%= product.title %>">
-        <div class="card-body"></div>
+    <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+            <li class="breadcrumb-item"><a href="/">Home</a></li>
+            <li class="breadcrumb-item"><a href="/products">Products</a></li>
+            <li class="breadcrumb-item active" aria-current="page"><%= product.title %></li>
+        </ol>
+    </nav>
+    <div class="card" style="max-width: 800px; margin: 0 auto;">
+        <img 
+            src="<%= product.image %>" 
+            class="card-img-top" 
+            alt="An image of <%= product.title %>"
+            style="width: 100%; height: auto; object-fit: contain;">
+        <div class="card-body">
             <h3 class="card-title"><%= product.title %></h3>
             <p class="card-text">
                 <strong>Condition:</strong> <%= product.condition %><br>
-                <strong>Price:</strong> <%= product.price %><br>
+                <strong>Price:</strong> $<%= product.price.toFixed(2) %><br>
                 <strong>Seller:</strong> <%= product.seller.firstName %> <%= product.seller.lastName %><br>
                 <strong>Description:</strong> <%= product.description %><br>
-                <form class="item-buttons">
-                    <button type= "submit" formmethod= "GET" formaction= "<%= product.id%>/edit">Edit</button>
-                    <button type="submit" formmethod="POST" formaction="<%= product.id%>?_method=DELETE">Delete</button>                    
+                <form class="item-buttons d-flex justify-content-start mt-3">
+                    <button type="submit" formmethod="GET" formaction="<%= product.id%>/edit" class="btn btn-primary mr-2">Edit</button>
+                    <button type="submit" formmethod="POST" formaction="<%= product.id%>?_method=DELETE" class="btn btn-danger">Delete</button>
                 </form>
             </p>
         </div>
     </div>
 </main>
-<%- include('../partials/footer.ejs')%>
+<%- include('../partials/footer.ejs') %>
