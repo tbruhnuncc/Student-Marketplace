@@ -28,3 +28,45 @@
     height: 20px;  /* Keep it proportional */
     margin-right: 10px; /* Add space between the logo and text */
 }
+
+#imagePreview {
+    display: none; /* hidden by default */
+    width: 100px;
+    height: 100px;
+}
+
+.card:hover {
+    transform: scale(1.05);
+    transition: all 0.2s ease;
+}
+
+/* Style for the box that will contain the image */
+.image-box {
+    width: 100%;             /* Ensure the box takes full width of the parent */
+    height: 200px;           /* You can adjust the height to whatever you need */
+    overflow: hidden;        /* Hide the overflow if the image is cropped */
+    position: relative;      /* This helps position the image correctly within the box */
+}
+
+/* Image styling to make it fill the box */
+.product-image {
+    width: 100%;             /* Make the image take the full width of the box */
+    height: 100%;            /* Make the image take the full height of the box */
+    object-fit: cover;       /* Ensure the image covers the box, cropping it if needed */
+    object-position: center; /* Keep the image centered in the box */
+}
+
+/* Optional: Style the rest of the card */
+.card-body {
+    padding: 10px;
+}
+
+.card-title {
+    font-size: 1.2em;
+    font-weight: bold;
+}
+
+.card-text {
+    font-size: 1em;
+    color: #555;
+}

@@ -16,7 +16,7 @@ const userSchema = new mongoose.Schema({
   },
   profilePicture: {
     type: String,
-    default: '/images/google-logo.png',
+    default: '/images/defaultpro.jpg',
   },
   federatedCredentials: {
     type: Array,
