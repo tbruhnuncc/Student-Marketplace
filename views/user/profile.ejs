@@ -5,7 +5,13 @@
 
   <div style="display: flex; justify-content: space-between;">
 
-    <div style="width: 45%;">
+    <div style="width: 45%">
+        
+        <img src="<%= user.profilePicture %>" alt="Profile Picture" style="width:150px; height:150px; border-radius:50%; margin-bottom: 1em;">
+        <form action="/users/uploadProfilePicture" method="POST" enctype="multipart/form-data">
+            <input type="file" name="profilePicture" accept="image/*">
+            <button type="submit" class="btn btn-primary mt-2">Upload New Picture</button>
+        </form>
 
       <h2 style="font-size: 1.5em; margin: 0;">First Name:</h2>
       <p style="font-size: 1.2em; color: #555;"><%= user.firstName %></p>

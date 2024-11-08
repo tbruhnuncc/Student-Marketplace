@@ -14,6 +14,10 @@ const userSchema = new mongoose.Schema({
     required: [true, "Email is required"],
     unique: [true, "Email already exists"],
   },
+  profilePicture: {
+    type: String,
+    default: '/images/google-logo.png',
+  },
   federatedCredentials: {
     type: Array,
     required: [true, "Federated credentials are required"],

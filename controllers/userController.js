@@ -74,7 +74,7 @@ exports.profile = (req, res, next) => {
   model
     .findById(id)
     .then((user) => {
-      if ({user}) {
+      if (user) {
         //finds all products created by this user
         return productModel.find({seller: id}).then((products)=> ({user, products}));
         //res.render("./user/profile", { user: user });   
@@ -113,6 +113,21 @@ exports.login = (req, res, next) => {
     .catch((err) => next(err));
 };
 
+// to upload new profile picture
+exports.uploadProfilePicture = (req, res, next) => {
+  let id = req.session.passport.user.id;
+  if (req.file) {
+    const profilePicturePath = `/images/profile/${req.file.filename}`;
+    model
+    .findByIdAndUpdate(id, {profilePicture: profilePicturePath})
+    .then(() => res.redirect('/users/profile'))
+    .catch((err)=> next(err));
+  } else {
+    req.flash('error', "Please upload a valid image file");
+    res.redirect('/users/profile');
+  }
+}
+
 exports.googleStrategy = (passport) => {
   passport.use(
     new GoogleStrategy(
@@ -140,6 +155,7 @@ exports.googleStrategy = (passport) => {
                 firstName: profile.name.givenName,
                 lastName: profile.name.familyName,
                 email: profile.emails[0].value,
+                profilePicture: profile.photos[0].value,
                 federatedCredentials: [
                   {
                     provider: issuer,

@@ -2,6 +2,7 @@ const express = require("express");
 const controller = require("../controllers/userController");
 const { isLoggedIn, isGuest } = require("../middleware/auth");
 let passport = require("passport");
+const {uploadProfilePicture} = require("../middleware/fileUpload");
 
 const router = express.Router();
 
@@ -32,5 +33,8 @@ router.get(
     failureFlash: true,
   })
 );
+
+// profile picture upload
+router.post('/uploadProfilePicture', isLoggedIn, uploadProfilePicture, controller.uploadProfilePicture);
 
 module.exports = router;

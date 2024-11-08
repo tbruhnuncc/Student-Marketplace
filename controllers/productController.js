@@ -14,20 +14,6 @@ exports.read = (req, res, next) => {
     .catch((err) => next(err));
 };
 
-// exports.delete = (req, res, next) => {
-//   let id = req.params.id;
-//   model
-//     .findByIdAndDelete(id)
-//     .then((result) => {
-//       if (result) {
-//         res.send(result);
-//       } else {
-//         next(err);
-//       }
-//     })
-//     .catch((err) => next(err));
-// };
-
 exports.index = (req, res, next) => {
   let query = {};
   let searchString = req.query.search;
@@ -67,7 +53,7 @@ exports.new = (req, res, next) => {
 exports.create = (req, res, next) => {
   let product = new model(req.body);
   product.seller = req.session.passport.user.id;
-  product.image = "/images/" + req.file.filename;
+  product.image = "/images/products/" + req.file.filename;
   product.active = true;
   product.tags = ["placeholder1", "placeholder2"];
   product
