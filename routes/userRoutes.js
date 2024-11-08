@@ -12,6 +12,8 @@ controller.serialization(passport);
 //GET /users/profile: send user's profile page
 router.get("/profile", isLoggedIn, controller.profile);
 
+router.get("/profile/:id", isLoggedIn, controller.viewSellerProfile);
+
 router.get("/logout", isLoggedIn, function (req, res, next) {
   req.logout(function (err) {
     if (err) {
@@ -36,7 +38,5 @@ router.get(
 
 // profile picture upload
 router.post('/uploadProfilePicture', isLoggedIn, uploadProfilePicture, controller.uploadProfilePicture);
-
-router.post("/resetProfilePicture", isLoggedIn, controller.resetProfilePicture);
 
 module.exports = router;

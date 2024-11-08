@@ -77,7 +77,7 @@ exports.profile = (req, res, next) => {
       if (user) {
         //finds all products created by this user
         return productModel.find({seller: id}).then((products)=> ({user, products}));
-        //res.render("./user/profile", { user: user });   
+        //res.render("./user/profile", {user: user});   
       }
     })
     .then(({user, products}) => {
@@ -89,6 +89,24 @@ exports.profile = (req, res, next) => {
     });
     
 };
+
+exports.viewSellerProfile = (req, res, next) => {
+  let sellerId = req.params.id;
+  model
+    .findById(sellerId)
+    .then((user) => {
+      if (user) {
+        return productModel.find({seller: sellerId}).then((products) => ({user, products}));
+      } else {
+        next(err);
+      }
+    })
+    .then(({user, products}) => {
+      res.render("./user/otherSellerProfile", {user, products});
+    })
+    .catch((err) => next(err));
+};
+
 
 exports.register = (req, res, next) => {
   res.render("./user/register");
@@ -127,22 +145,6 @@ exports.uploadProfilePicture = (req, res, next) => {
     res.redirect('/users/profile');
   }
 }
-
-exports.resetProfilePicture = async (req, res, next) => {
-  try {
-      const userId = req.session.passport.user.id; // Get the logged-in user's ID
-      const defaultProfilePicture = "/images/defaultpro.jpg"; // Path to the default profile picture
-
-      // Update the user's profile picture to the default image
-      await model.findByIdAndUpdate(userId, { profilePicture: defaultProfilePicture });
-
-      // Redirect back to the profile page
-      res.redirect("/users/profile");
-  } catch (error) {
-      console.error("Error resetting profile picture:", error);
-      next(error); // Pass the error to the error handling middleware
-  }
-};
 
 exports.googleStrategy = (passport) => {
   passport.use(

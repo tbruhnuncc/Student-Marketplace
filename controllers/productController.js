@@ -1,3 +1,4 @@
+const product = require("../models/product");
 const model = require("../models/product");
 
 exports.read = (req, res, next) => {
@@ -35,16 +36,18 @@ exports.show = (req, res, next) => {
   let id = req.params.id;
   model
     .findById(id)
-    .populate("seller", "firstName lastName")
+    .populate('seller', 'firstName lastName')
     .then((product) => {
+      console.log(product.seller);  // Check if the session has user data
       if (product) {
-        res.render("./product/show", { product });
+        res.render('./product/show', {product: product, user: req.user, session: req.session});
       } else {
         next(err);
       }
     })
     .catch((err) => next(err));
 };
+
 
 exports.new = (req, res, next) => {
   res.render("./product/new");
