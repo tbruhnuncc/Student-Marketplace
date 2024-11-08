@@ -128,6 +128,22 @@ exports.uploadProfilePicture = (req, res, next) => {
   }
 }
 
+exports.resetProfilePicture = async (req, res, next) => {
+  try {
+      const userId = req.session.passport.user.id; // Get the logged-in user's ID
+      const defaultProfilePicture = "/images/defaultpro.jpg"; // Path to the default profile picture
+
+      // Update the user's profile picture to the default image
+      await model.findByIdAndUpdate(userId, { profilePicture: defaultProfilePicture });
+
+      // Redirect back to the profile page
+      res.redirect("/users/profile");
+  } catch (error) {
+      console.error("Error resetting profile picture:", error);
+      next(error); // Pass the error to the error handling middleware
+  }
+};
+
 exports.googleStrategy = (passport) => {
   passport.use(
     new GoogleStrategy(

@@ -1,59 +1,74 @@
 <%- include('../partials/header.ejs') %>
-<div class="container mt-4">
-  <h1 class="text-center">Welcome, <%= user.firstName %>!</h1>
-  <p class="text-center">Here are your profile details:</p>
+    <div class="container mt-4">
+        <h1 class="text-center">Welcome, <%= user.firstName %>!</h1>
+        <p class="text-center">Here are your profile details:</p>
 
-  <div style="display: flex; justify-content: space-between;">
+        <div style="display: flex; justify-content: space-between;">
 
-    <div style="width: 45%">
-        
-        <img src="<%= user.profilePicture %>" alt="Profile Picture" style="width:150px; height:150px; border-radius:50%; margin-bottom: 1em;">
-        <form action="/users/uploadProfilePicture" method="POST" enctype="multipart/form-data">
-            <input type="file" name="profilePicture" accept="image/*">
-            <button type="submit" class="btn btn-primary mt-2">Upload New Picture</button>
-        </form>
+            <div style="width: 45%">
 
-      <h2 style="font-size: 1.5em; margin: 0;">First Name:</h2>
-      <p style="font-size: 1.2em; color: #555;"><%= user.firstName %></p>
+                <img 
+                    src="<%= user.profilePicture %>" 
+                    alt="Profile Picture"
+                    style="width:150px; height:150px; border-radius:50%; margin-bottom: 1em; border: 2px solid #000;">
+                <form action="/users/uploadProfilePicture" method="POST" enctype="multipart/form-data">
+                    <input type="file" name="profilePicture" accept="image/*">
+                    <button type="submit" class="btn btn-primary mt-2">Upload New Picture</button>
+                </form>
+                <form action="/users/resetProfilePicture" method="POST">
+                    <button type="submit" class="btn btn-secondary mt-2">Reset to Default</button>
+                </form>                
 
-      <h2 style="font-size: 1.5em; margin: 0;">Last Name:</h2>
-      <p style="font-size: 1.2em; color: #555;"><%= user.lastName %></p>
+                <h2 style="font-size: 1.5em; margin: 0;">First Name:</h2>
+                <p style="font-size: 1.2em; color: #555;">
+                    <%= user.firstName %>
+                </p>
 
-      <h2 style="font-size: 1.5em; margin: 0;">Email:</h2>
-      <p style="font-size: 1.2em; color: #555;"><%= user.email %></p>
-    
-    </div>
+                <h2 style="font-size: 1.5em; margin: 0;">Last Name:</h2>
+                <p style="font-size: 1.2em; color: #555;">
+                    <%= user.lastName %>
+                </p>
 
-    <div style="width: 50%;">
-      
-      <h2 class="text-center">Your Listings</h2>
-      <div class="row">
-    
-        <% if (products.length) { %>
-            <% products.forEach(product => { %>
-                <% if (product.active) { %>
-                    <div class="col-md-4 mb-4">
-                        <a href="/products/<%= product.id %>" class="text-decoration-none text-dark">
-                            <div class="card h-100">
-                                <img src="<%= product.image %>" class="card-img-top" alt="An image of a <%= product.title %>">
-                                <div class="card-body">
-                                    <h5 class="card-title"><%= product.title %></h5>
-                                    <p class="card-text">
-                                        Condition: <%= product.condition %><br>
-                                        Price: <%= product.price %><br>
-                                    </p>
+                <h2 style="font-size: 1.5em; margin: 0;">Email:</h2>
+                <p style="font-size: 1.2em; color: #555;">
+                    <%= user.email %>
+                </p>
+
+            </div>
+
+            <div style="width: 50%;">
+
+                <h2 class="text-center">Your Listings</h2>
+                <div class="row">
+
+                    <% if (products.length) { %>
+                        <% products.forEach(product=> { %>
+                            <% if (product.active) { %>
+                                <div class="col-md-4 mb-4">
+                                    <a href="/products/<%= product.id %>" class="text-decoration-none text-dark">
+                                        <div class="card h-100">
+                                            <img src="<%= product.image %>" class="card-img-top"
+                                                alt="An image of a <%= product.title %>">
+                                            <div class="card-body">
+                                                <h5 class="card-title">
+                                                    <%= product.title %>
+                                                </h5>
+                                                <p class="card-text">
+                                                    Condition: <%= product.condition %><br>
+                                                        Price: <%= product.price %><br>
+                                                </p>
+                                            </div>
+                                        </div>
+                                    </a>
                                 </div>
-                            </div>
-                        </a>
-                    </div>
-                <% } %>
-            <% }); %>
-        <% } else { %>
-            <p class="text-center">There are no products to display.</p>
-        <% } %>
-    
+                                <% } %>
+                                    <% }); %>
+                                        <% } else { %>
+                                            <p class="text-center">There are no products to display.</p>
+                                            <% } %>
+
+                </div>
+            </div>
+        </div>
     </div>
-    </div>
-  </div>
-</div>
-<%- include('../partials/footer.ejs') %>
+    <%- include('../partials/footer.ejs') %>
