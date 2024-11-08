@@ -1,30 +1,79 @@
-<%- include('./partials/header.ejs')%>
+<%- include('./partials/header.ejs') %>
+
+<!-- Welcome Section -->
 <div class="container mt-4">
-    <h1 class="text-center">Welcome to the Student Marketplace</h1>
-    <p>This is a platform where students can buy and sell items easily. Browse through listings, post items for sale, and manage your profile all in one place.</p>
+    <h1 class="text-center mb-4">Welcome to the Student Marketplace!</h1>
+    <p class="text-center">
+        Whether you're looking for textbooks, electronics, or everyday items, this platform makes it easy for students like you to buy and sell things you need. It's fast, simple, and convenient.
+    </p>
+    <p class="text-center">Join the community of students buying and selling with ease. Get started today!</p>
 </div>
+
+<!-- Login Section (only if not authenticated) -->
 <% if (authenticated === false) { %>
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-6">
-            <h2 class="text-center">Login</h2>
+            <h2 class="text-center mb-3">Login to Get Started</h2>
+            <p class="text-center mb-3">Log in to access your marketplace account, browse listings, post items for sale, and manage your profile. It's quick, easy, and secure!</p>
             <div class="text-center mt-3">
-                <a href="/users/login/federated/google" class="btn btn-google btn-block">
-                    <img src="/images/google-logo.png" alt="Google logo" class="google-logo">
+                <a href="/users/login/federated/google" class="btn btn-google btn-block px-4 py-3">
+                    <img src="/images/google-logo.png" alt="Google logo" class="google-logo me-2" style="width: 20px;">
                     Login with Google
                 </a>
-            </div>                      
+            </div>  
         </div>
     </div>
 </div>
 <% } %>
+
+<!-- Marketplace Overview Section -->
 <div class="container mt-5">
     <div class="row justify-content-center">
         <div class="col-md-8 text-center">
-            <h2>Discover Amazing Deals</h2>
-            <p>Find the best deals on textbooks, electronics, and more. Join our community and start saving today!</p>
-            <img src="/images/marketplace.jpg" alt="Marketplace" class="img-fluid mt-4">
+            <h2>Find Amazing Deals on Everyday Items</h2>
+            <p>Browse through a variety of listings ranging from textbooks to electronics, home goods, and more. All items are posted by students just like you!</p>
+            <p>Start exploring and find exactly what you're looking for at unbeatable prices!</p>
+            
+            <!-- Interactive Image with Hover Effect -->
+            <img src="/images/marketplace.jpg" alt="Marketplace" class="img-fluid mt-4" style="transition: transform 0.3s ease-in-out;">
         </div>
     </div>
 </div>
-<%- include('./partials/footer.ejs')%>
+
+<!-- Features Section (Buy & Sell, Profile Management) -->
+<div class="container mt-5">
+    <h3 class="text-center mb-4">Why Use Our Marketplace?</h3>
+    <p class="text-center mb-5">Here’s how our platform makes it easy for students to save money, make extra cash, and connect with others in the community.</p>
+    <div class="row text-center">
+        <!-- Buy & Sell Feature -->
+        <div class="col-md-6 mb-4">
+            <i class="fas fa-bookmark fa-3x mb-3"></i>
+            <h4>Buy & Sell with Ease</h4>
+            <p>Posting your items for sale is quick and easy! Browse through thousands of listings, or list your own items in just a few clicks.</p>
+            <ul class="list-unstyled">
+                <li>Post items in seconds</li>
+                <li>Search for deals based on your needs</li>
+                <li>Communicate directly with sellers</li>
+            </ul>
+        </div>
+        <!-- Profile Management Feature -->
+        <div class="col-md-6 mb-4">
+            <i class="fas fa-user-cog fa-3x mb-3"></i>
+            <h4>Manage Your Profile with Ease</h4>
+            <p>Your profile is the heart of the marketplace. Keep track of your listings, and make changes to your account.</p>
+            <ul class="list-unstyled">
+                <li>Edit your personal details anytime</li>
+                <li>View your active listings and past sales</li>
+                <li>Customize your profile to showcase your items</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+<!-- Call-to-Action Button -->
+<div class="container mt-5 text-center">
+    <a href="/products" class="btn btn-primary btn-lg">Browse Listings Now</a>
+</div>
+
+<%- include('./partials/footer.ejs') %>
