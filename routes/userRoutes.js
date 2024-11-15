@@ -39,4 +39,6 @@ router.get(
 // profile picture upload
 router.post('/uploadProfilePicture', isLoggedIn, uploadProfilePicture, controller.uploadProfilePicture);
 
+router.post("/resetProfilePicture", isLoggedIn, controller.resetProfilePicture);
+
 module.exports = router;
