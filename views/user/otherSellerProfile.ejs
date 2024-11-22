@@ -1,6 +1,7 @@
 <%- include('../partials/header.ejs') %>
 <div class="container mt-4">
   <h1 class="text-center"><%= user.firstName %>'s Profile!</h1>
+  <a href="/messaging/<%= user._id %>" class="btn btn-primary">Message Seller</a>
 
   <div style="display: flex; justify-content: space-between;">
 
