@@ -1,6 +1,7 @@
 const mongoose = require("mongoose");
 const model = require("../models/user");
 const productModel = require('../models/product');
+const Message = require('../models/message');
 let GoogleStrategy = require("passport-google-oidc");
 const dotenv = require("dotenv");
 dotenv.config();
@@ -75,19 +76,45 @@ exports.profile = (req, res, next) => {
     .findById(id)
     .then((user) => {
       if (user) {
-        //finds all products created by this user
-        return productModel.find({seller: id}).then((products)=> ({user, products}));
-        //res.render("./user/profile", {user: user});   
+        // Return multiple promises in an object
+        return Promise.all([
+          productModel.find({ seller: id }),
+          Message.find({
+            $or: [{ sender: id }, { recipient: id }]
+          })
+          .sort({ timestamp: -1 })
+          .populate('sender recipient', 'firstName lastName')
+        ]).then(([products, messages]) => {
+          // Process conversations
+          const conversations = [];
+          const seenUsers = new Set();
+
+          messages.forEach(msg => {
+            const otherUser = msg.sender._id.equals(id) ? msg.recipient : msg.sender;
+            
+            if (!seenUsers.has(otherUser._id.toString())) {
+              seenUsers.add(otherUser._id.toString());
+              conversations.push({
+                userId: otherUser._id,
+                userName: `${otherUser.firstName} ${otherUser.lastName}`,
+                lastMessage: msg.content,
+                timestamp: msg.timestamp,
+                unread: !msg.read && msg.sender._id.equals(otherUser._id)
+              });
+            }
+          });
+
+          return { user, products, conversations };
+        });
       }
     })
-    .then(({user, products}) => {
-      res.render("./user/profile", {user, products});
+    .then(({ user, products, conversations }) => {
+      res.render("./user/profile", { user, products, conversations });
     })
     .catch((err) => {
       console.log(err);
       next(err);
     });
-    
 };
 
 exports.viewSellerProfile = (req, res, next) => {
