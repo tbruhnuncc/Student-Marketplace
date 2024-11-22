@@ -5,20 +5,20 @@
     <div class="card-header">
       <h5 class="mb-0">Chat with <%= otherUser.firstName %> <%= otherUser.lastName %></h5>
     </div>
-    <div class="card-body" style="height: 400px; overflow-y: auto;">
+    <div class="card-body" style="height: 400px; overflow-y: auto">
       <div id="messages">
         <% messages.forEach(message => { %>
-          <div class="message <%= message.sender._id.equals(currentUser.id) ? 'text-end' : '' %>">
-            <small class="text-muted"><%= message.sender.firstName %>:</small>
-            <p class="mb-1"><%= message.content %></p>
-          </div>
+        <div class="message <%= message.sender._id.equals(currentUser.id) ? 'text-end' : '' %>">
+          <small class="text-muted"><%= message.sender.firstName %>:</small>
+          <p class="mb-1"><%= message.content %></p>
+        </div>
         <% }) %>
       </div>
     </div>
     <div class="card-footer">
       <form id="messageForm" class="d-flex">
-        <input type="hidden" id="recipientId" value="<%= otherUser._id %>">
-        <input type="text" id="messageInput" class="form-control me-2" placeholder="Type your message...">
+        <input type="hidden" id="recipientId" value="<%= otherUser._id %>" />
+        <input type="text" id="messageInput" class="form-control me-2" placeholder="Type your message..." />
         <button type="submit" class="btn btn-primary">Send</button>
       </form>
     </div>
@@ -28,36 +28,55 @@
 <script src="/socket.io/socket.io.js"></script>
 <script>
   const socket = io();
-  const form = document.getElementById('messageForm');
-  const input = document.getElementById('messageInput');
-  const recipientId = document.getElementById('recipientId').value;
+  const form = document.getElementById("messageForm");
+  const input = document.getElementById("messageInput");
+  const recipientId = document.getElementById("recipientId").value;
+  const messagesDiv = document.getElementById("messages");
 
-  socket.emit('join', '<%= currentUser.id %>');
+  socket.emit("join", "<%= currentUser.id %>");
 
-  socket.on('connect', () => {
-    console.log('Connected to socket.io');
+  socket.on("connect", () => {
+    console.log("Connected to socket.io");
   });
 
-  form.addEventListener('submit', (e) => {
+  form.addEventListener("submit", (e) => {
     e.preventDefault();
-    const messageData = {
-      recipient: document.getElementById('recipientId').value,
-      content: document.getElementById('messageInput').value
-    };
-    console.log('Sending message:', messageData);
-    socket.emit('chat message', messageData);
-  });
+    if (!input.value.trim()) return;
 
-  socket.on('private message', (data) => {
-    const messagesDiv = document.getElementById('messages');
-    const messageElement = document.createElement('div');
-    messageElement.className = `message ${data.sender === '<%= currentUser.id %>' ? 'text-end' : ''}`;
+    const messageData = {
+      recipient: recipientId,
+      content: input.value.trim(),
+    };
+
+    // Add message to UI immediately for sender
+    const messageElement = document.createElement("div");
+    messageElement.className = `message text-end`;
     messageElement.innerHTML = `
-      <small class="text-muted">${data.sender === '<%= currentUser.id %>' ? 'You' : '<%= otherUser.firstName %>'}:</small>
-      <p class="mb-1">${data.content}</p>
+      <small class="text-muted"><%= currentUser.firstName %>:</small>
+      <p class="mb-1">${messageData.content}</p>
     `;
     messagesDiv.appendChild(messageElement);
     messagesDiv.scrollTop = messagesDiv.scrollHeight;
+
+    // Send to server
+    socket.emit("chat message", messageData);
+
+    // Clear input
+    input.value = "";
+  });
+
+  socket.on("chat message", (data) => {
+    // Only show message if it's from the other user
+    if (data.sender !== "<%= currentUser.id %>") {
+      const messageElement = document.createElement("div");
+      messageElement.className = "message";
+      messageElement.innerHTML = `
+        <small class="text-muted"><%= otherUser.firstName %>:</small>
+        <p class="mb-1">${data.content}</p>
+      `;
+      messagesDiv.appendChild(messageElement);
+      messagesDiv.scrollTop = messagesDiv.scrollHeight;
+    }
   });
 </script>
 
@@ -78,4 +97,4 @@
   }
 </style>
 
-<%- include('../partials/footer.ejs') %> 
+<%- include('../partials/footer.ejs') %>
