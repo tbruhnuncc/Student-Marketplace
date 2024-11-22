@@ -29,6 +29,24 @@
                         </div>
 
                         <div class="mb-3">
+                            <label for="tags" class="form-label">Tags (select up to 5):</label>
+                            <select class="form-control" id="tags" name="tags" multiple>
+                                <option value="Electronics" <%= product.tags.includes('Electronics') ? 'selected' : '' %>>Electronics</option>
+                                <option value="Furniture" <%= product.tags.includes('Furniture') ? 'selected' : '' %>>Furniture</option>
+                                <option value="Books" <%= product.tags.includes('Books') ? 'selected' : '' %>>Books</option>
+                                <option value="Clothing" <%= product.tags.includes('Clothing') ? 'selected' : '' %>>Clothing</option>
+                                <option value="School Supplies" <%= product.tags.includes('School Supplies') ? 'selected' : '' %>>School Supplies</option>
+                                <option value="Sports Equipment" <%= product.tags.includes('Sports Equipment') ? 'selected' : '' %>>Sports Equipment</option>
+                                <option value="Kitchenware" <%= product.tags.includes('Kitchenware') ? 'selected' : '' %>>Kitchenware</option>
+                                <option value="Accessories" <%= product.tags.includes('Accessories') ? 'selected' : '' %>>Accessories</option>
+                                <option value="Home Decor" <%= product.tags.includes('Home Decor') ? 'selected' : '' %>>Home Decor</option>
+                                <option value="Entertainment" <%= product.tags.includes('Entertainment') ? 'selected' : '' %>>Entertainment</option>
+                                <option value="Health & Beauty" <%= product.tags.includes('Health & Beauty') ? 'selected' : '' %>>Health & Beauty</option>
+                            </select>
+                            <small class="form-text text-muted">Hold Ctrl (Cmd on Mac) to select multiple tags.</small>
+                        </div>
+
+                        <div class="mb-3">
                             <label for="description" class="form-label">Details:</label>
                             <textarea class="form-control" id="description" name="description" rows="4" required><%=product.description%></textarea>
                         </div>

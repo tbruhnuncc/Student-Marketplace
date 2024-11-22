@@ -27,6 +27,8 @@ const productSchema = new mongoose.Schema({
   tags: {
     type: [String],
     required: [true, "Product tags are required"],
+    enum: ['Electronics', 'Furniture', 'Books', 'Clothing', 'School Supplies', 'Sports Equipment', 'Kitchenware', 'Accessories', 'Home Decor', 'Entertainment', 'Health & Safety'],
+    validate: [tagsArray => tagsArray.length <= 5],
   },
   image: {
     type: String,

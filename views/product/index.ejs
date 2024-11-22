@@ -4,6 +4,20 @@
       <div class="search-bar">
         <form class="d-flex" action="/products" method="get">
           <input class="form-control me-2" type="search" name="search" placeholder="Search for products" aria-label="Search">
+          <select class="form-select me-2" name="tag">
+            <option value="" selected>Filter by tag</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Furniture">Furniture</option>
+            <option value="Books">Books</option>
+            <option value="Clothing">Clothing</option>
+            <option value="School Supplies">School Supplies</option>
+            <option value="Sports Equipment">Sports Equipment</option>
+            <option value="Kitchenware">Kitchenware</option>
+            <option value="Accessories">Accessories</option>
+            <option value="Home Decor">Home Decor</option>
+            <option value="Entertainment">Entertainment</option>
+            <option value="Health & Beauty">Health & Beauty</option>
+          </select>
           <button class="btn btn-outline-success" type="submit"><i class="fa-solid fa-magnifying-glass"></i></button>
         </form>
       </div>

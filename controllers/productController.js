@@ -18,16 +18,22 @@ exports.read = (req, res, next) => {
 exports.index = (req, res, next) => {
   let query = {};
   let searchString = req.query.search;
+  let selectedTag = req.query.tag;
   const regex = new RegExp("^" + searchString, "i");
   if (searchString) {
     const regex = new RegExp("^" + searchString, "i");
     query = { $or: [{ title: regex }, { description: regex }] };
   }
+
+  if (selectedTag) {
+    query.tags = selectedTag;
+  }
+
   let products = model
     .find(query)
     .then((products) => {
       products = products.sort((a, b) => a.price - b.price);
-      res.render("./product/index", { products });
+      res.render("./product/index", {products});
     })
     .catch((err) => next(err));
 };
@@ -58,7 +64,12 @@ exports.create = (req, res, next) => {
   product.seller = req.session.passport.user.id;
   product.image = "/images/products/" + req.file.filename;
   product.active = true;
-  product.tags = ["placeholder1", "placeholder2"];
+   // process tags from request body
+   product.tags = req.body.tags || []; 
+   if (typeof product.tags === "string") {
+     product.tags = [product.tags]; // ensures single value is an array
+   }
+
   product
     .save()
     .then((result) => {
@@ -106,7 +117,12 @@ exports.update = (req, res, next) => {
     price: req.body.price,
     description: req.body.description,
     image: req.body.existingImage,
+    tags: req.body.tags || [],
   };
+
+  if (typeof updatedProduct.tags === "string") {
+    updatedProduct.tags = [updatedProduct.tags];
+  }
 
   if (req.file) {
     updatedProduct.image = "/images/" + req.file.filename;
