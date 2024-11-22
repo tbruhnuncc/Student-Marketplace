@@ -1,5 +1,11 @@
-<%- include('../partials/header.ejs')%>
+<%- include('../partials/header.ejs', { pageName: 'product-page' }) %>
   <main class="container mt-5">
+    <style>
+      .card:hover {
+        transform: scale(1.05);
+        transition: all 0.2s ease;
+      }
+    </style>
     <div>
       <div class="search-bar">
         <form class="d-flex" action="/products" method="get">

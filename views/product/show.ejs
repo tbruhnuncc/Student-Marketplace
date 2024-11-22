@@ -27,8 +27,8 @@
                 
                 <% if (product.seller._id.equals(session.passport.user.id)) { %>
                     <form class="item-buttons" method="POST">
-                        <button type="submit" formmethod="GET" formaction="/products/<%= product.id %>/edit">Edit</button>
-                        <button type="submit" formmethod="POST" formaction="/products/<%= product.id %>?_method=DELETE">Delete</button>                    
+                        <button type="submit" formmethod="GET" formaction="/products/<%= product.id %>/edit" class="btn btn-warning me-2">Edit</button>
+                        <button type="submit" formmethod="POST" formaction="/products/<%= product.id %>?_method=DELETE" class="btn btn-danger">Delete</button>
                     </form>
                 <% } %>
             </p>

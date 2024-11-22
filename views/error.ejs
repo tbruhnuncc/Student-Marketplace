@@ -1,9 +1,10 @@
-<%- include('./partials/header.ejs')%>
-<main>
-    <h1>A Error Has Occured</h1>
+<%- include('./partials/header.ejs') %>
+<main class="text-center p-4 bg-danger-subtle text-danger">
+    <h1 class="fs-2 mb-3">An Error Has Occurred</h1>
     <p>
-    Error Status: <%= error.status %> <br>
-    Error Description: <%= error.message %>
+        <strong>Error Status:</strong> <%= error.status || "Unknown" %><br>
+        <strong>Error Description:</strong> <%= error.message || "No details available" %>
     </p>
+    <a href="/" class="btn btn-danger mt-3">Go Back to Home</a>
 </main>
-<%- include('./partials/footer.ejs')%>
+<%- include('./partials/footer.ejs') %>

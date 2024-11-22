@@ -35,10 +35,11 @@
     height: 100px;
 }
 
-.card:hover {
+/* .card:hover {
     transform: scale(1.05);
     transition: all 0.2s ease;
-}
+} */
+
 
 /* Style for the box that will contain the image */
 .image-box {
