@@ -122,3 +122,22 @@ io.on("connection", (socket) => {
     socket.join(userId);
   });
 });
+
+// Catch 404 errors
+app.use((req, res, next) => {
+  let err = new Error("The server cannot locate " + req.url);
+  err.status = 404;
+  next(err);
+});
+
+// Handle all other errors
+app.use((err, req, res, next) => {
+  console.log(err.stack);
+  if (!err.status) {
+    err.status = 500;
+    err.message = "Internal Server Error";
+  }
+
+  res.status(err.status);
+  res.render("error", { error: err });
+});
